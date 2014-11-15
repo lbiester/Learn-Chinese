@@ -10,7 +10,7 @@ import re
 f = open('chinese-dictionary.txt','r')
 i =0
 for line in f.readlines():
-    if i < 12000:
+    if i < 1200:
         completecompetition = line.split(" ",2)
         traditional = completecompetition[0]
         simplified = completecompetition[1]

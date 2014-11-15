@@ -29,12 +29,20 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return '<User %r>' % (self.nickname)
 
+wordset = db.Table('wordset',
+    db.Column('word_id', db.Integer, db.ForeignKey('word.id')),
+    db.Column('set_id',db.Integer, db.ForeignKey('set.id'))
+)
+
 class Word(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     traditional = db.Column(db.String(256))
     simplified = db.Column(db.String(256))
     pinyin = db.Column(db.String(256))
     english = db.Column(db.String(200))
+
+    wordset = db.relationship('Set', secondary=wordset, backref=db.backref('words', lazy='dynamic'))
+
     def __init__(self, traditional, simplified, pinyin, english):
         self.traditional = traditional
 	self.simplified = simplified
@@ -47,7 +55,6 @@ class Set(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    def __init__(self,name,user_id):
+	
 
-class WordSet(db.Model):
-    word_id = db.Column(db.Integer, db.ForeignKey('word.id'), primary_key=True)
-    set_id = db.Column(db.Integer, db.ForeignKey('set.id'), primary_key=True)
