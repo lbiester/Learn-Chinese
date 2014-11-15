@@ -59,11 +59,7 @@ def getWord(word):
 @app.route('/set/<id>')
 def set(id):
     set = Set.query.filter_by(id=id).first()
-<<<<<<< HEAD
     return render_template('set.html', name=set.name, set=set.words)
-=======
-    return render_template('set.html', name=set.name, set=set)
->>>>>>> abe592a4a470caf300794d46a5ffa9233ffdd358
 
 @app.route('/cards/<id>')
 def cards(id):
