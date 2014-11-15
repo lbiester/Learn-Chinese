@@ -38,7 +38,6 @@ def set(id):
     set = Set.query.filter_by(id=id).first()
     return render_template('set.html', name=set.name, set=set.words)
 
-
 @app.route('/cards/<id>')
 def cards(id):
     set = Set.query.filter_by(id=id).first()
