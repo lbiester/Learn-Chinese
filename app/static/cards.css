@@ -1,6 +1,44 @@
 div.card {
-    height: 200px;
+    height: 120px;
     width: 80%;
-    background-color: #239343;
+    border: 3px solid black;
+    border-bottom: none;
     margin-left: 10%;
+    padding: 20px;
+}
+div.card:last-child {
+    border-bottom: 3px solid black;
+}
+.invisible {
+    display: none;
+}
+
+.correct {
+    border: 1px solid green;
+    background-color: green;
+}
+
+div.iffy {
+    background-color: #FFB970;
+}
+
+div.wrong {
+    background-color: red;
+}
+
+div.word-input button {
+    width: 100%;
+}
+
+div.row {
+    padding-bottom: 10px;
+}
+
+/*div.button-row {
+    width: 80%;
+    padding-left: 10%;
+}*/
+
+button.card-nav {
+    width: 100%;
 }

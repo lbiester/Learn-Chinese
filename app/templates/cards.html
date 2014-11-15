@@ -1,12 +1,76 @@
-<script src='{{ url_for("static", filename="addset-script.js")}}'></script>
 <link href= '{{ url_for("static", filename="cards.css") }}' rel='stylesheet' />
+<script src='{{ url_for("static", filename="jquery-1.11.1.js") }}'></script>
+<script src='{{ url_for("static", filename="cards-script.js") }}'></script>
 
 {% extends "base.html" %}
 {% block content %}
 <div class="row">
+    <div class="col-xs-12 text-center">
+        <h1>{{ name }}</h1>
+    </div>
+</div>
+{% for word in set %}
+<div class="row invisible card-row">
     <div class="col-md-12">
         <div class="card center-block" id="simplified">
+            Simplified Character
+            <h1>{{ word.simplified }}</h1>
         </div>
+        <div class="card center-block" id="traditional">
+            Traditional Character
+            <h1 class="invisible">{{ word.traditional }}</h1>
+            <div class="row word-input">
+                <div class="col-md-8">
+                    <input class="form-control traditional" />
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-success submit-answer">Submit</button>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-warning reveal-answer">Reveal Answer</button>
+                </div>
+            </div>
+        </div>
+        <div class="card center-block" id="pinyin">
+            Pinyin
+            <h1 class="invisible">{{ word.pinyin }}</h1>
+            <div class="row word-input">
+                <div class="col-md-8">
+                    <input class="form-control traditional" />
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-success submit-answer">Submit</button>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-warning reveal-answer">Reveal Answer</button>
+                </div>
+            </div>
+        </div>
+        <div class="card center-block" id="english">
+            English
+            <h1 class="invisible">{{ word.english }}</h1>
+            <div class="row word-input">
+                <div class="col-md-8">
+                    <input class="form-control traditional" />
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-success submit-answer">Submit</button>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-warning reveal-answer">Reveal Answer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<div class="row button-row">
+    <div class="col-md-6 block-center">
+        <button class="btn btn-default card-nav" id="prev-card">Previous Card</button>
+    </div>
+    <div class="col-md-6">
+        <button class="btn btn-default card-nav" id="next-card">Next Card</button>
     </div>
 </div>
 
