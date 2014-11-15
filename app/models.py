@@ -9,7 +9,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 
-Model = declarative_base()
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), nullable=False, unique=True)
@@ -29,7 +28,7 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return '<User %r>' % (self.username)
 
-wordset = db.Table('wordset',
+words = db.Table('words',
     db.Column('word_id', db.Integer, db.ForeignKey('word.id')),
     db.Column('set_id',db.Integer, db.ForeignKey('set.id'))
 )
@@ -40,8 +39,6 @@ class Word(db.Model):
     simplified = db.Column(db.String(256))
     pinyin = db.Column(db.String(256))
     english = db.Column(db.String(200))
-
-    wordset = db.relationship('Set', secondary=wordset, backref=db.backref('words', lazy='dynamic'))
 
     def __init__(self, traditional, simplified, pinyin, english):
         self.traditional = traditional
@@ -54,6 +51,8 @@ class Word(db.Model):
 
 class Set(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    words = db.relationship('Word', secondary=words, backref=db.backref('sets', lazy='joined'))
+
     name = db.Column(db.String(40))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
