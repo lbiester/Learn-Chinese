@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>{{ name }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered" id="input-table">
+                <thead>
+                    <tr>
+                        <th>Simplified</th>
+                        <th>Traditional</th>
+                        <th>Pinyin</th>
+                        <th>English</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for word in set %}
+                    <tr>
+                        <td>{{ word.traditional }}</td>
+                        <td>{{ word.simplified }}</td>
+                        <td>{{ word.pinyin }}</td>
+                        <td>{{ word.english }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
