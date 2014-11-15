@@ -39,11 +39,12 @@ def addset():
 @login_required
 def user(username):
     if request_method == 'DELETE':
+        pass
     else:
         user = g.user
         return render_template('user.html', user=user)
 
-@app.route('/deleteset/<id>'>, methods=['DELETE'])
+@app.route('/deleteset/<id>', methods=['DELETE'])
 def deleteset(id):
     if request_method == 'DELETE':
         # delete thing
