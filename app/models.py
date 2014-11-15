@@ -2,7 +2,14 @@
 
 from app import db
 from flask_user import UserMixin
+import os
+import sys
+from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+from sqlalchemy import create_engine
 
+Model = declarative_base()
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), nullable=False, unique=True)
@@ -28,6 +35,13 @@ class Word(db.Model):
     simplified = db.Column(db.String(256))
     pinyin = db.Column(db.String(256))
     english = db.Column(db.String(200))
+    def __init__(self, traditional, simplified, pinyin, english):
+        self.traditional = traditional
+	self.simplified = simplified
+	self.pinyin = pinyin
+	self.english = english
+    def __repr__(self):
+	return '<Word %r, %r, %r, %r>'%(self.traditional,self.simplified, self.pinyin,self.english)
 
 class Set(db.Model):
     id = db.Column(db.Integer, primary_key=True)
