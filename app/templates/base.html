@@ -1,6 +1,9 @@
 <html>
     <head>
         <link href= '{{ url_for("static", filename="bootstrap.css") }}' rel='stylesheet' />
+        <script>
+            var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+        </script>
         <title>Learn Chinese Flashcards</title>
     </head>
     <body>
@@ -21,7 +24,7 @@
               </form>
 
               <form class="navbar-form navbar-left pull-right" role="search">
-                <a href="#" class="btn btn-success" role="button">Log In</a>
+                <a href="/user/login" class="btn btn-success" role="button">Log In</a>
               </form>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->

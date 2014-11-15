@@ -1,6 +1,33 @@
 <link href= '{{ url_for("static", filename="addset.css") }}' rel='stylesheet' />
+<script src='{{ url_for("static", filename="jquery-1.11.1.js") }}'></script>
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 <script>
-
+    var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    var table_row = '<tr><td><input name="input-word" class="form-control" /></td><td></td><td></td><td></td><td><button class="btn btn-danger btn-100 remove-row"><i class="fa fa-times"></i></button></td></tr>';
+    $(document).ready(function() {
+        $('button.add-rows').click(function() {
+            for (var i = 0; i < 5; i++) {
+                $('table#input-table tr:last').after(table_row);
+                $('button.remove-row').click(function() {
+                    $(this).parent().parent().remove()
+                });
+            }
+        });
+        $('button.remove-row').click(function() {
+            $(this).parent().parent().remove()
+        });
+        $('input[name="input-word"]').bind('blur', function() {
+          input = $(this);
+          $.getJSON($SCRIPT_ROOT + '/words/word', function(data) {
+            input.parent().next().html(data.traditional);
+            input.parent().next().next().html(data.pinyin);
+            input.parent().next().next().next().html(data.english);
+            console.log(input);
+            console.log(data);
+          });
+          return false;
+        });
+    })
 </script>
 
 {% extends "base.html" %}
@@ -8,7 +35,8 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
-            <table class="table table-bordered">
+            <form method="POST" action="/addset">
+            <table class="table table-bordered" id="input-table">
                 <thead>
                     <tr>
                         <th>Simplified</th>
@@ -20,56 +48,52 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input class="form-control" /></td>
+                        <td><input name="input-word" class="form-control" /></td>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><button class="btn btn-danger">Remove</button></td>
+                        <td><button class="btn btn-danger btn-100 remove-row"><i class="fa fa-times"></i></button></td>
                     </tr>
                     <tr>
-                        <td><input class="form-control" /></td>
+                        <td><input name="input-word" class="form-control" /></td>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><button class="btn btn-danger">Remove</button></td>
-
-                    </tr>
-                    <tr>
-                        <td><input class="form-control" /></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><button class="btn btn-danger">Remove</button></td>
-
+                        <td><button class="btn btn-danger btn-100 remove-row"><i class="fa fa-times"></i></button></td>
 
                     </tr>
                     <tr>
-                        <td><input class="form-control" /></td>
+                        <td><input name="input-word" class="form-control" /></td>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><button class="btn btn-danger">Remove</button></td>
-
-
+                        <td><button class="btn btn-danger btn-100 remove-row"><i class="fa fa-times"></i></button></td>
                     </tr>
                     <tr>
-                        <td><input class="form-control" /></td>
+                        <td><input name="input-word" class="form-control" /></td>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><button class="btn btn-danger">Remove</button></td>
-
-
+                        <td><button class="btn btn-danger btn-100 remove-row"><i class="fa fa-times"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><input name="input-word" class="form-control" /></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><button class="btn btn-danger btn-100 remove-row"><i class="fa fa-times"></i></button></td>
                     </tr>
                 </tbody>
             </table>
+            <button class="btn btn-success add-rows btn-100">
+                Add Five Words
+            </button>
+            <button type="submit" class="btn btn-primary btn-100">Submit Set</button>
+        </form>
         </div>
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <button class="btn btn-success add-rows">
-                Add Five Words
-            </button>
         </div>
     </div>
 </div>

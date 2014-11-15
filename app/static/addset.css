@@ -1,3 +1,7 @@
-button.add-rows {
+button.btn-100 {
     width: 100%;
+}
+
+button.add-rows {
+    margin-bottom: 10px;
 }
