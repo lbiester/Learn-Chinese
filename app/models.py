@@ -22,6 +22,8 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(100), nullable=False, server_default='')
     last_name = db.Column(db.String(100), nullable=False, server_default='')
 
+    sets = db.relationship('Set', backref='user', lazy='dynamic')
+
     def is_active(self):
         return self.is_enabled
     
@@ -59,6 +61,6 @@ class Set(db.Model):
     def __repr__(self):
         return '<Set %r, %r>' % (self.name, self.user_id)
 
-    def __init__(self,name,user):
+    def __init__(self,name,user_id):
 	self.name = name
-        self.user_id = user.id
+        self.user_id = user_id
