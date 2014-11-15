@@ -12,9 +12,9 @@ class Word(db.Model):
 class Set(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40))
-    user_id = db.Column(db.Integer, foreign_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('User.id'))
 
 
 class WordSet(db.Model):
-    word_id = db.Column(db.Integer, ForeignKey('Word.id'), primary_key=True)
-    set_id = db.Column(db.Integer, ForeignKey('Set.id'), primary_key=True)
+    word_id = db.Column(db.Integer, db.ForeignKey('Word.id'), primary_key=True)
+    set_id = db.Column(db.Integer, db.ForeignKey('Set.id'), primary_key=True)
