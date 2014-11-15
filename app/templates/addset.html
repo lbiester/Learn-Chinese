@@ -1,0 +1,76 @@
+<link href= '{{ url_for("static", filename="addset.css") }}' rel='stylesheet' />
+<script>
+
+</script>
+
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Simplified</th>
+                        <th>Traditional</th>
+                        <th>Pinyin</th>
+                        <th>English</th>
+                        <th>Remove Item</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input class="form-control" /></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><button class="btn btn-danger">Remove</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="form-control" /></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><button class="btn btn-danger">Remove</button></td>
+
+                    </tr>
+                    <tr>
+                        <td><input class="form-control" /></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><button class="btn btn-danger">Remove</button></td>
+
+
+                    </tr>
+                    <tr>
+                        <td><input class="form-control" /></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><button class="btn btn-danger">Remove</button></td>
+
+
+                    </tr>
+                    <tr>
+                        <td><input class="form-control" /></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><button class="btn btn-danger">Remove</button></td>
+
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <button class="btn btn-success add-rows">
+                Add Five Words
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
