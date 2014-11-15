@@ -48,6 +48,7 @@ class Word(db.Model):
 	self.simplified = simplified
 	self.pinyin = pinyin
 	self.english = english
+
     def __repr__(self):
 	return '<Word %r, %r, %r, %r>'%(self.traditional,self.simplified, self.pinyin,self.english)
 
@@ -55,6 +56,7 @@ class Set(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    def __init__(self,name,user_id):
-	
 
+    def __init__(self,name,user):
+	self.name = name
+        self.user_id = user.id
