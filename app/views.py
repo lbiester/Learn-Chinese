@@ -30,8 +30,6 @@ def addset():
             if input != "":
                 word = models.Word.query.filter_by(simplified=input).first()
                 set.words.append(word)
-        for word in set.words:
-            print word
         db.session.add(set)
         db.session.commit()
         return redirect('/')
@@ -54,7 +52,6 @@ def deleteset(id):
 @app.route('/words/<word>')
 def getWord(word):
     query_result = Word.query.filter_by(simplified=word).first()
-    print word
     return_data = {'traditional': query_result.traditional, 'pinyin': query_result.pinyin, 'english': query_result.english}
     return jsonify(return_data)
 
