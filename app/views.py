@@ -8,8 +8,9 @@ from flask_user import login_required
 @app.route('/')
 @app.route('/index')
 def index():
-
-    return render_template('index.html', title='Home')
+    sets_to_return = [];
+    sets = Set.query.order_by(Set.id).limit(3).all()
+    return render_template('index.html', title='Home', sets=sets)
 
 @app.route('/addset', methods=['GET', 'POST'])
 def addset():

@@ -1,5 +1,15 @@
 var table_row = '<tr><td><input name="input-word" class="form-control" /></td><td></td><td></td><td></td><td><button class="btn btn-danger btn-100 remove-row" type="button"><i class="fa fa-times"></i></button></td></tr>';
 $(document).ready(function() {
+    $(window).keydown(function(event){
+        if (event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+        else if (event.keyCode == 9) {
+            event.preventDevault();
+            return false;
+        }
+    });
     $('button.add-rows').click(function() {
         for (var i = 0; i < 5; i++) {
             $('table#input-table tr:last').after(table_row);
