@@ -1,4 +1,4 @@
-# views.py
+# This Python file uses the following encoding: utf-8
 
 from app import app
 from models import *
@@ -25,3 +25,9 @@ def getWord(word):
     print word
     return_data = {'traditional': query_result.traditional, 'pinyin': query_result.pinyin, 'english': query_result.english}
     return jsonify(return_data)
+
+@app.route('/cards/<id>')
+def cards(id):
+    fake_set = [{'traditional': '你好', 'simplified': 'nihao-S', 'pinyin': 'ni3 hao3', 'english': 'hello'}]
+    fake_set.append({'traditional': 'wo-T', 'simplified': 'wo-S', 'pinyin': 'wo3', 'english': 'I'})
+    return render_template('cards.html', set=fake_set)

@@ -1,6 +1,7 @@
 <html>
     <head>
         <link href= '{{ url_for("static", filename="bootstrap.css") }}' rel='stylesheet' />
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
         <script>
             var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
         </script>
@@ -11,7 +12,7 @@
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-              <a class="navbar-brand" href="{{ url_for('index') }}">Home :)</a>
+              <a class="navbar-brand" href="{{ url_for('index') }}">家 of Cards</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -24,7 +25,11 @@
               </form>
 
               <form class="navbar-form navbar-left pull-right" role="search">
-                <a href="{{ url_for('user.login') }}" class="btn btn-success" role="button">Log In</a>
+                {% if current_user.is_authenticated() %}
+                  <a href="{{ url_for('user.logout') }}" class="btn btn-warning">Sign out</a>
+                {% else %}
+                  <a href="{{ url_for('user.login') }}" class="btn btn-success" role="button">Log In</a>
+                {% endif %}
               </form>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
