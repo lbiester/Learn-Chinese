@@ -18,7 +18,7 @@
         });
         $('input[name="input-word"]').bind('blur', function() {
           input = $(this);
-          $.getJSON($SCRIPT_ROOT + '/words/word', function(data) {
+          $.getJSON($SCRIPT_ROOT + '/words/' + input.val(), function(data) {
             input.parent().next().html(data.traditional);
             input.parent().next().next().html(data.pinyin);
             input.parent().next().next().next().html(data.english);
@@ -85,7 +85,7 @@
                     </tr>
                 </tbody>
             </table>
-            <button class="btn btn-success add-rows btn-100">
+            <button type="button" class="btn btn-success add-rows btn-100">
                 Add Five Words
             </button>
             <button type="submit" class="btn btn-primary btn-100">Submit Set</button>

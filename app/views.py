@@ -1,12 +1,14 @@
 # views.py
 
 from app import app
+from models import *
 from flask import render_template, request, redirect, jsonify
 from flask_user import login_required
 
 @app.route('/')
 @app.route('/index')
 def index():
+
     return render_template('index.html', title='Home')
 
 @app.route('/addset', methods=['GET', 'POST'])
@@ -19,6 +21,7 @@ def addset():
 
 @app.route('/words/<word>')
 def getWord(word):
+    query_result = Word.query.filter_by(simplified=word).first()
     print word
-    return_data = {'traditional': 'traditional!', 'pinyin': 'pinyin!', 'english': 'english!'}
+    return_data = {'traditional': query_result.traditional, 'pinyin': query_result.pinyin, 'english': query_result.english}
     return jsonify(return_data)
