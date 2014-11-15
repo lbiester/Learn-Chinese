@@ -1,0 +1,61 @@
+<link href= '{{ url_for("static", filename="home.css") }}' rel='stylesheet' />
+<script src='{{ url_for("static", filename="jquery-1.11.1.js") }}'></script>
+
+<script>
+    $('button.delete').click(function() {
+      $('input[name="input-word"]').bind('blur', function() {
+          input = $(this);
+          $.getJSON($SCRIPT_ROOT + '/words/' + input.val(), function(data) {
+            input.parent().next().html(data.traditional);
+            input.parent().next().next().html(data.pinyin);
+            input.parent().next().next().next().html(data.english);
+            console.log(input);
+            console.log(data);
+          });
+          return false;
+        });
+    });
+</script>
+{% extends "base.html" %}
+{% block content %}
+
+<p>hello, {{ user.username }}</p>
+
+<div class="row recent-items">
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3 class="text-center">Most recent 4 things</h3>
+            </div>
+        </div>
+        <div class="row">
+            {% for set in user.sets %}
+            <div class="col-md-4">
+                <div class="recent-item">
+                    <div class="recent-item-title">
+                        <h5 class="text-center">{{ set.name }}</h5>
+                    </div>
+                    <div class="recent-item-content">
+                    <td><button class="btn btn-danger btn-100 remove-row" type="button"><i class="fa fa-times"></i></button></td>
+                        <div>
+                            {{ set.words[0].simplified }}, {{set.words[0].pinyin}}, {{ set.words[0].english }}
+                        </div>
+                        {% if set.words[1] %}
+                        <div>
+                            {{ set.words[1].simplified }}, {{set.words[1].pinyin}}, {{ set.words[1].english }}
+                        </div>
+                        {% endif %}
+                        {% if set.words[2] %}
+                        <div>
+                            {{ set.words[2].simplified }}, {{set.words[2].pinyin}}, {{ set.words[2].english }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
