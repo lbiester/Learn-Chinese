@@ -5,13 +5,13 @@ div.jumbotron {
 div.recent-items {
     background-color: black;
     padding: 40px;
+    overflow: scroll;
 }
 div.recent-item {
     background-color: #FCFF96;
     height: 250px;
     border-radius: 5px;
-    overflow: hidden;
-    /*padding: 20px;*/
+    overflow: scroll;
 }
 div.recent-item-title {
     padding: 10px;
@@ -21,6 +21,4 @@ div.recent-item-content div {
     border-bottom: 1px solid grey;
     padding: 10px;
 }
-div.recent-item-content div:last-child {
-    border: None;
-}
+
