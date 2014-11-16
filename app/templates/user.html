@@ -3,13 +3,14 @@
 
 <script>
 $(document).ready(function() {
+    $('li#viewsets').addClass('active');
     $('button.remove-row').click(function() {
         $.ajax({
                 type: "POST",
                 url: $SCRIPT_ROOT + '/deleteset/' + this.id,
                 success: function(data){
                     console.log("success");
-                    $('button#' + data.id).parent().parent().parent().remove();
+                    $('button#' + data.id).parent().parent().parent().parent().remove();
                 }
         });
     });

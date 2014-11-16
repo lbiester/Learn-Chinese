@@ -60,9 +60,10 @@ def getWord(word):
 @app.route('/set/<id>')
 def set(id):
     set = Set.query.filter_by(id=id).first()
-    return render_template('set.html', name=set.name, set=set.words)
+    return render_template('set.html', name=set.name, set=set.words, id=set.id)
 
 @app.route('/cards/<id>')
 def cards(id):
+    print "CARDS!"
     set = Set.query.filter_by(id=id).first()
     return render_template('cards.html', name=set.name, set=set.words)
