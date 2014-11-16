@@ -1,11 +1,12 @@
 div.jumbotron {
-    background-color: magenta;
+    background-color: white;
 }
 
 div.recent-items {
-    background-color: black;
+    background-color: #73A2BA;
     padding: 40px;
     overflow: scroll;
+    border-radius: 5px;
 }
 div.recent-item {
     background-color: #FCFF96;
