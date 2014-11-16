@@ -9,12 +9,12 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 CSRF_ENABLED = True
 
-MAIL_USERNAME = os.getenv('MAIL_USERNAME', 'carletonrides@yahoo.com')
-MAIL_PASSWORD = os.getenv('MAIL_PASSWORD', 'thisismypassword')
-MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER', '"Learn Chinese" <carletonrides@yahoo.com>')
-MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.mail.yahoo.com')
-MAIL_PORT = int(os.getenv('MAIL_PORT', '465'))
-MAIL_USE_SSL = True
-MAIL_USE_TLS = False
+MAIL_USERNAME = os.getenv('MAIL_USERNAME', 'jiaofcards@gmail.com')
+MAIL_PASSWORD = 'weishengjian'
+MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER', '"Learn Chinese" <jiaoofcards@gmail.com>')
+MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.google.com')
+MAIL_PORT = int(os.getenv('MAIL_PORT', '587'))
+MAIL_USE_SSL = False
+MAIL_USE_TLS = True
 
 USER_APP_NAME = "Learn Chinese"
