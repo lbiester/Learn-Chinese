@@ -5,7 +5,7 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <span class="card-head">{{ name }}</span>
+        <span class="card-head">{{ name or "Untitled" }}</span>
         <span class="pull-right">
             <a class="btn btn-success study-button" href="{{ url_for('cards', id=id) }}">Study Cards</a>
         </span>

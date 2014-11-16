@@ -33,7 +33,7 @@ def addset():
                     set.words.append(word)
         db.session.add(set)
         db.session.commit()
-        return redirect('/')
+        return redirect('/user/')
     return render_template('addset.html')
 
 @app.route('/user/')

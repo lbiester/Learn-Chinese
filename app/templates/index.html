@@ -1,4 +1,17 @@
 <link href= '{{ url_for("static", filename="home.css") }}' rel='stylesheet' />
+<script src='{{ url_for("static", filename="jquery-1.11.1.js") }}'></script>
+<script>
+$(document).ready(function() {
+    $('div.recent-item').mouseover(function() {
+        $(this).addClass('black');
+    });
+    $('div.recent-item').mouseout(function() {
+        $(this).removeClass('black');
+    });
+
+
+});
+</script>
 {% extends "base.html" %}
 {% block content %}
 <div class="row">
@@ -19,7 +32,7 @@
             <div class="col-md-4">
                 <div class="recent-item">
                     <div class="recent-item-title">
-                        <h5 class="text-center">{{ set.name or "Untitled" }}</h5>
+                        <h5 class="text-center"><a href="{{ url_for('cards', id=set.id) }}"> {{ set.name or "Untitled" }}</a></h5>
                     </div>
                     <div class="recent-item-content">
                         {% if set.words[0] %}
