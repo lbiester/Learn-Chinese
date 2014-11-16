@@ -1,9 +1,7 @@
 div.card {
     height: 120px;
-    width: 80%;
     border: 3px solid black;
     border-bottom: none;
-    margin-left: 10%;
     padding: 20px;
 }
 div.card:last-child {
@@ -34,6 +32,10 @@ div.row {
     padding-bottom: 10px;
 }
 
+button.buttonprev_next {
+    background-color: #48B4ED;
+    width: 5em;  height: 3em;
+}
 /*div.button-row {
     width: 80%;
     padding-left: 10%;
