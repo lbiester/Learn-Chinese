@@ -22,3 +22,11 @@ div.recent-item-content div {
     border-bottom: 1px solid grey;
     padding: 10px;
 }
+<<<<<<< HEAD
+=======
+div.content {
+    width: 80%;
+    margin-left: 10%;
+}
+
+>>>>>>> b2ce6378d95d8add3183430ded9d9aeb054a00be
