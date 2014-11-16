@@ -22,4 +22,8 @@ div.recent-item-content div {
     border-bottom: 1px solid grey;
     padding: 10px;
 }
+div.content {
+    width: 80%;
+    margin-left: 10%;
+}
 

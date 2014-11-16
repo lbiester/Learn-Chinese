@@ -36,4 +36,5 @@ $(document).ready(function() {
         });
     };
     ajax_input();
+    $('li#addset').addClass('active');
 })
