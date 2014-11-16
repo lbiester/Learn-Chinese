@@ -18,7 +18,7 @@
             <div class="col-md-4">
                 <div class="recent-item">
                     <div class="recent-item-title">
-                        <h5 class="text-center">{{ set.name }}</h5>
+                        <h5 class="text-center">{{ set.name or "Untitled" }}</h5>
                     </div>
                     <div class="recent-item-content">
                         {% if set.words[0] %}

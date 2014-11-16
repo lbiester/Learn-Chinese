@@ -26,21 +26,23 @@ $(document).ready(function() {
         iffyInput(input);
     });
     $('button#next-card').click(function() {
-        $('div.card-row:nth-child(' + currentPos + ')').addClass('invisible');
-        currentPos++;
-        $('div.card-row:nth-child(' + currentPos + ')').removeClass('invisible');
-        // if (currentPos == $('div.card-row').length - 1) {
-        //      $("button#next-card").attr("disabled", "disabled");
-        // } else {
-        //     $("button#next-card").removeAttr("disabled");
-        // }
+        var next = $('div.card-row.active').next();
+        $('div.card-row.active').addClass('invisible');
+        $('div.card-row.active').removeClass('active');
+        next.removeClass('invisible');
+        next.addClass('active');
+        activateButtons();
     });
     $('button#prev-card').click(function() {
-        $('div.card-row:nth-child(' + currentPos + ')').addClass('invisible');
-        currentPos--;
-        $('div.card-row:nth-child(' + prev_card + ')').removeClass('invisible');
-    })
-    $('div.card-row:first').removeClass('invisible');
+        var prev = $('div.card-row.active').prev();
+        $('div.card-row.active').addClass('invisible');
+        $('div.card-row.active').removeClass('active');
+        prev.removeClass('invisible');
+        prev.addClass('active');
+        activateButtons();
+    });
+    $('div.card-row#1').removeClass('invisible');
+    $('div.card-row#1').addClass('active');
     correctInput = function(element) {
         element.parent().parent().parent().addClass('correct');
         element.parent().parent().addClass('invisible');
@@ -56,6 +58,18 @@ $(document).ready(function() {
     incorrectInput = function(element) {
         element.parent().parent().parent().addClass('wrong');
         console.log('wrong');
+    }
+    activateButtons = function() {
+        if ($('div.card-row.active').attr('id') == 1) {
+            $('button#prev-card').attr('disabled', 'disabled');
+        } else {
+            $('button#prev-card').removeAttr('disabled');
+        }
+        if ($('div.card-row.active').attr('id') == $('div.card-row').length) {
+            $('button#next-card').attr('disabled', 'disabled');
+        } else {
+            $('button#next-card').removeAttr('disabled');
+        }
     }
 
 })
