@@ -20,13 +20,13 @@
             Traditional Character
             <h1 class="invisible">{{ word.traditional }}</h1>
             <div class="row word-input">
-                <div class="col-md-8">
+                <div class="col-md-6">
                     <input class="form-control traditional" />
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <button class="btn btn-success submit-answer">Submit</button>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <button class="btn btn-warning reveal-answer">Reveal Answer</button>
                 </div>
             </div>
@@ -35,28 +35,28 @@
             Pinyin
             <h1 class="invisible">{{ word.pinyin }}</h1>
             <div class="row word-input">
-                <div class="col-md-8">
+                <div class="col-md-6">
                     <input class="form-control traditional" />
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <button class="btn btn-success submit-answer">Submit</button>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <button class="btn btn-warning reveal-answer">Reveal Answer</button>
                 </div>
             </div>
         </div>
         <div class="card center-block" id="english">
             English
-            <h1 class="invisible">{{ word.english }}</h1>
+            <p class="invisible">{{ word.english }}</p>
             <div class="row word-input">
-                <div class="col-md-8">
+                <div class="col-md-6">
                     <input class="form-control traditional" />
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <button class="btn btn-success submit-answer">Submit</button>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <button class="btn btn-warning reveal-answer">Reveal Answer</button>
                 </div>
             </div>
@@ -66,10 +66,13 @@
 {% endfor %}
 
 <div class="row button-row">
-    <div class="col-md-6 block-center">
+    <div class="col-md-4 block-center">
         <button class="btn buttonprev_next card-nav" id="prev-card" disabled="disabled">Previous Card</button>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4 block-center">
+        <button class="btn buttonprev_next card-nav" id="revealAll">Reveal All Answers</button>
+    </div>
+    <div class="col-md-4">
         <button class="btn buttonprev_next card-nav" id="next-card">Next Card</button>
     </div>
 </div>

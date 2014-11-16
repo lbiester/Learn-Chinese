@@ -41,13 +41,36 @@ $(document).ready(function() {
         prev.addClass('active');
         activateButtons();
     });
+    $('button#revealAll').click(function() {
+        var traditional = $('div.card-row.active div#traditional');
+        var pinyin = $('div.card-row.active div#pinyin');
+        var english = $('div.card-row.active div#english');
+
+        if (!(traditional).hasClass('correct')) {
+            traditional.removeClass('wrong');
+            traditional.addClass('iffy');
+            traditional.children().first().removeClass('invisible');
+            traditional.children().first().next().addClass('invisible');
+        }
+        if (!(pinyin).hasClass('correct')) {
+            pinyin.removeClass('wrong');
+            pinyin.addClass('iffy');
+            pinyin.children().first().removeClass('invisible');
+            pinyin.children().first().next().addClass('invisible');
+        }
+        if (!(english).hasClass('correct')) {
+            english.removeClass('wrong');
+            english.addClass('iffy');
+            english.children().first().removeClass('invisible');
+            english.children().first().next().addClass('invisible');
+        }
+    })
     $('div.card-row#1').removeClass('invisible');
     $('div.card-row#1').addClass('active');
     correctInput = function(element) {
         element.parent().parent().parent().addClass('correct');
         element.parent().parent().addClass('invisible');
         element.parent().parent().prev().removeClass('invisible');
-        console.log('correct');
     };
     iffyInput = function(element) {
         element.parent().parent().parent().removeClass('wrong');

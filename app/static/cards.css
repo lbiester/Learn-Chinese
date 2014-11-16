@@ -1,5 +1,5 @@
 div.card {
-    height: 120px;
+    min-height: 120px;
     border: 3px solid black;
     border-bottom: none;
     padding: 20px;
@@ -12,16 +12,16 @@ div.card:last-child {
 }
 
 .correct {
-    border: 1px solid green;
-    background-color: green;
+    /*border: 1px solid #20D4BC;*/
+    background-color: #20D4BC;
 }
 
 div.iffy {
-    background-color: #FFB970;
+    background-color: #F29830;
 }
 
 div.wrong {
-    background-color: red;
+    background-color: #D42038;
 }
 
 div.word-input button {
@@ -32,18 +32,17 @@ div.row {
     padding-bottom: 10px;
 }
 
-<<<<<<< HEAD
 button.buttonprev_next {
     background-color: #48B4ED;
     width: 5em;  height: 3em;
 }
-/*div.button-row {
-    width: 80%;
-    padding-left: 10%;
-}*/
 
-=======
->>>>>>> ee59ed9e8ebc530a1b4ee32f1b1bd00dc4678674
+
 button.card-nav {
     width: 100%;
+}
+
+div.container {
+    width: 80% ;
+    margin-left: 10%;
 }
