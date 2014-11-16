@@ -1,5 +1,7 @@
 div.jumbotron {
     background-color: white;
+    height: 250px;
+    background: url('image/wordzi.jpg');
 }
 
 div.recent-items {
