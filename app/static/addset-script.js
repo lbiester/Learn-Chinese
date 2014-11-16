@@ -25,7 +25,7 @@ $(document).ready(function() {
     ajax_input = function() {
       $('input[name="input-word"]').bind('blur', function() {
           input = $(this);
-          $.getJSON($SCRIPT_ROOT + '/words/' + input.val(), function(data) {
+          $.getJSON($SCRIPT_ROOT + '/words/' + input.val(), fwunction(data) {
             input.parent().next().html(data.traditional);
             input.parent().next().next().html(data.pinyin);
             input.parent().next().next().next().html(data.english);

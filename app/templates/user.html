@@ -1,60 +1,64 @@
-<link href= '{{ url_for("static", filename="home.css") }}' rel='stylesheet' />
+<link href= '{{ url_for("static", filename="user.css") }}' rel='stylesheet' />
 <script src='{{ url_for("static", filename="jquery-1.11.1.js") }}'></script>
 
 <script>
-    $('button.delete').click(function() {
-      $('input[name="input-word"]').bind('blur', function() {
-          input = $(this);
-          $.getJSON($SCRIPT_ROOT + '/words/' + input.val(), function(data) {
-            input.parent().next().html(data.traditional);
-            input.parent().next().next().html(data.pinyin);
-            input.parent().next().next().next().html(data.english);
-            console.log(input);
-            console.log(data);
-          });
-          return false;
+$(document).ready(function() {
+    $('button.remove-row').click(function() {
+        $.ajax({
+                type: "POST",
+                url: $SCRIPT_ROOT + '/deleteset/' + this.id,
+                success: function(data){
+                    console.log("success");
+                    $('button#' + data.id).parent().parent().parent().remove();
+                }
         });
-    };
+    });
+});
 </script>
 {% extends "base.html" %}
 {% block content %}
 
-<p>hello, {{ user.username }}</p>
-
-<div class="row recent-items">
+<div class="row">
     <div class="col-xs-12">
         <div class="row">
             <div class="col-xs-12">
-                <h3 class="text-center">Most recent 4 things</h3>
+                <h3 class="text-center">Your Sets</h3>
             </div>
         </div>
-        <div class="row">
-            {% for set in user.sets %}
-            <div class="col-md-4">
-                <div class="recent-item">
-                    <div class="recent-item-title">
-                        <h5 class="text-center">{{ set.name }}</h5>
+        {% for set in user.sets %}
+        <div class="row rounded-box">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="{{ url_for('set', id=set.id) }}"><h4>{{ set.name or "Untitled"}}</h4></a>
                     </div>
-                    <div class="recent-item-content">
-                    <td><button class="btn btn-danger btn-100 remove-row" type="button"><i class="fa fa-times"></i></button></td>
-                        <div>
-                            {{ set.words[0].simplified }}, {{set.words[0].pinyin}}, {{ set.words[0].english }}
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-10">
+                        {% if set.words[0] %}
+                        <em>
+                            1. {{ set.words[0].simplified }}, {{set.words[0].pinyin}}, {{ set.words[0].english}}
+                        </em>
+                        {% endif %}
                         {% if set.words[1] %}
-                        <div>
-                            {{ set.words[1].simplified }}, {{set.words[1].pinyin}}, {{ set.words[1].english }}
-                        </div>
+                        <em>
+                            2. {{ set.words[1].simplified }}, {{set.words[1].pinyin}}, {{ set.words[1].english}}
+                        </em>
                         {% endif %}
                         {% if set.words[2] %}
-                        <div>
-                            {{ set.words[2].simplified }}, {{set.words[2].pinyin}}, {{ set.words[2].english }}
-                        </div>
+                        <em>
+                            3. {{ set.words[2].simplified }}, {{set.words[2].pinyin}}, {{ set.words[2].english}}
+                        </em>
                         {% endif %}
+
+                    </div>
+                    <div class="col-xs-2">
+                        <button class="btn btn-danger btn-100 remove-row" type="button" id="{{ set.id }}"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
     </div>
 </div>
 

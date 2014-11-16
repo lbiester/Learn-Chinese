@@ -21,9 +21,11 @@
                         <h5 class="text-center">{{ set.name }}</h5>
                     </div>
                     <div class="recent-item-content">
+                        {% if set.words[0] %}
                         <div>
                             {{ set.words[0].simplified }}, {{set.words[0].pinyin}}, {{ set.words[0].english }}
                         </div>
+                        {% endif %}
                         {% if set.words[1] %}
                         <div>
                             {{ set.words[1].simplified }}, {{set.words[1].pinyin}}, {{ set.words[1].english }}

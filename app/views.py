@@ -15,7 +15,7 @@ def before_request():
 def index():
     sets_to_return = [];
     sets = Set.query.order_by(Set.id).limit(3).all()
-    return render_template('index.html', title='Home', sets=sets)
+    return render_template('index.html', title='Home', sets=sets, user=g.user)
 
 @app.route('/addset', methods=['GET', 'POST'])
 def addset():
@@ -29,26 +29,27 @@ def addset():
         for input in list:
             if input != "":
                 word = models.Word.query.filter_by(simplified=input).first()
-                set.words.append(word)
+                if word:
+                    set.words.append(word)
         db.session.add(set)
         db.session.commit()
         return redirect('/')
     return render_template('addset.html')
 
-@app.route('/user/<username>', methods=['GET', 'DELETE'])
+@app.route('/user/')
 @login_required
-def user(username):
-    if request_method == 'DELETE':
-        pass
+def user():
+    if request.method == 'DELETE':
+        return jsonify({})
     else:
         user = g.user
         return render_template('user.html', user=user)
 
-@app.route('/deleteset/<id>', methods=['DELETE'])
+@app.route('/deleteset/<id>', methods=['POST'])
 def deleteset(id):
-    if request_method == 'DELETE':
-        # delete thing
-        pass
+    db.session.delete(Set.query.filter_by(id=id).first())
+    db.session.commit()
+    return jsonify({'id': id})
 
 @app.route('/words/<word>')
 def getWord(word):

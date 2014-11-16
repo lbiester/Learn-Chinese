@@ -10,6 +10,7 @@ div.recent-item {
     background-color: #FCFF96;
     height: 250px;
     border-radius: 5px;
+    overflow: hidden;
     /*padding: 20px;*/
 }
 div.recent-item-title {
