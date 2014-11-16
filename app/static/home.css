@@ -1,15 +1,18 @@
 div.jumbotron {
     background-color: white;
+    height: 250px;
+    background: url('image/wordzi.jpg');
 }
 
 div.recent-items {
-    background-color: #73A2BA;
-    padding: 40px;
+    background-color: #995778;
+    padding: 60px;
     overflow: scroll;
     border-radius: 5px;
+
 }
 div.recent-item {
-    background-color: #FCFF96;
+    background-color: #F0EFEB;
     height: 250px;
     border-radius: 5px;
     overflow: scroll;
@@ -22,11 +25,12 @@ div.recent-item-content div {
     border-bottom: 1px solid grey;
     padding: 10px;
 }
-<<<<<<< HEAD
-=======
+
 div.content {
     width: 80%;
     margin-left: 10%;
 }
 
->>>>>>> b2ce6378d95d8add3183430ded9d9aeb054a00be
+div.copyright {
+    padding: 2em;
+}
