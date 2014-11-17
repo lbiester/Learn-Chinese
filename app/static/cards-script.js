@@ -7,8 +7,6 @@ $(document).ready(function() {
             } else {
                 incorrectInput($(this));
             }
-            console.log(this);
-            console.log('hello');
             event.preventDefault();
             return false;
         }
@@ -68,7 +66,8 @@ $(document).ready(function() {
     $('div.card-row#1').removeClass('invisible');
     $('div.card-row#1').addClass('active');
     correctInput = function(element) {
-        element.parent().parent().parent().addClass('correct');
+        element.parent().parent().parent().removeClass('wrong');
+	element.parent().parent().parent().addClass('correct');
         element.parent().parent().addClass('invisible');
         element.parent().parent().prev().removeClass('invisible');
     };

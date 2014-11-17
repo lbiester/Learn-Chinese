@@ -1,8 +1,0 @@
-<html>
-    <head></head>
-    <body>
-        <p>"Hey what's up world?!"</p>
-        {% block content %}
-        {% endblock %}
-    </body>
-</html>
