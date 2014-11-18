@@ -8,3 +8,7 @@ button.add-rows {
 input.set-name {
     margin-bottom: 10px;
 }
+
+button.invisible {
+    display: none;
+}

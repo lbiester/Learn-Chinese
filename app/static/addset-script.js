@@ -11,6 +11,10 @@ $(document).ready(function() {
         }
     });
     $('button.add-rows').click(function() {
+        if ($('input[name="input-word"]').length == 1) {
+            $('button.remove-row').removeClass('invisible');
+            $('thead tr th:last').html("Remove Item");
+        }
         for (var i = 0; i < 5; i++) {
             $('table#input-table tr:last').after(table_row);
             $('button.remove-row').click(function() {
@@ -18,23 +22,33 @@ $(document).ready(function() {
             });
             ajax_input();
         }
+        $('button.remove-row').click(function() {
+            remove_rows(this);
+        });
     });
     $('button.remove-row').click(function() {
-        $(this).parent().parent().remove()
+        remove_rows(this);
     });
     ajax_input = function() {
       $('input[name="input-word"]').bind('blur', function() {
           input = $(this);
-          $.getJSON($SCRIPT_ROOT + '/words/' + input.val(), function(data) {
-            input.parent().next().html(data.traditional);
-            input.parent().next().next().html(data.pinyin);
-            input.parent().next().next().next().html(data.english);
-            console.log(input);
-            console.log(data);
-          });
+          if (input.val() !== "") {
+              $.getJSON($SCRIPT_ROOT + '/words/' + input.val(), function(data) {
+                input.parent().next().html(data.traditional);
+                input.parent().next().next().html(data.pinyin);
+                input.parent().next().next().next().html(data.english);
+              });
+          }
           return false;
         });
     };
+    remove_rows = function(row) {
+        $(row).parent().parent().remove();
+        if ($('input[name="input-word"]').length == 1) {
+            $('button.remove-row').addClass('invisible');
+            $('thead tr th:last').html("");
+        }
+    }
     ajax_input();
     $('li#addset').addClass('active');
 })

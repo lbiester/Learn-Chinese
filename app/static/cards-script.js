@@ -67,7 +67,7 @@ $(document).ready(function() {
     $('div.card-row#1').addClass('active');
     correctInput = function(element) {
         element.parent().parent().parent().removeClass('wrong');
-	element.parent().parent().parent().addClass('correct');
+	    element.parent().parent().parent().addClass('correct');
         element.parent().parent().addClass('invisible');
         element.parent().parent().prev().removeClass('invisible');
     };
@@ -79,7 +79,6 @@ $(document).ready(function() {
     }
     incorrectInput = function(element) {
         element.parent().parent().parent().addClass('wrong');
-        console.log('wrong');
     }
     activateButtons = function() {
         if ($('div.card-row.active').attr('id') == 1) {
@@ -93,5 +92,5 @@ $(document).ready(function() {
             $('button#next-card').removeAttr('disabled');
         }
     }
-
+    activateButtons();
 })
