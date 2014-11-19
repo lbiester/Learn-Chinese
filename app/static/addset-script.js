@@ -1,4 +1,7 @@
 var table_row = '<tr><td><input name="input-word" class="form-control" /></td><td></td><td></td><td></td><td><button class="btn btn-danger btn-100 remove-row" type="button"><i class="fa fa-times"></i></button></td></tr>';
+var error_message = '<div class="alert alert-danger" role="alert"> \
+  <i class="fa fa-exclamation-circle"></i> \
+  <span class="sr-only">Error:</span>'
 $(document).ready(function() {
     $(window).keydown(function(event){
         if (event.keyCode == 13) {
@@ -28,6 +31,25 @@ $(document).ready(function() {
     });
     $('button.remove-row').click(function() {
         remove_rows(this);
+    });
+    $('button[type="submit"]').click(function() {
+        $('div.alert').remove();
+        var allEmpty = true;
+        $('input[name="input-word"]').each(function() {
+            if ($(this).val() !== "") {
+                allEmpty = false;
+                return;
+            }
+        });
+        if (allEmpty) {
+            event.preventDefault();
+            $('div.row:first').before(error_message + 'You cannot leave all fields blank</div>');
+            return;
+        }
+        if ($('input.set-name').val().trim() === "") {
+            event.preventDefault();
+            $('div.row:first').before(error_message + 'You must include a title</div>');
+        }
     });
     ajax_input = function() {
       $('input[name="input-word"]').bind('blur', function() {
