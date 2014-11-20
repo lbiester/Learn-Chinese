@@ -5,6 +5,7 @@ from models import *
 from flask import render_template, request, redirect, jsonify, g
 from flask.ext.login import current_user
 from flask_user import login_required
+from random import shuffle
 
 @app.before_request
 def before_request():
@@ -64,6 +65,7 @@ def set(id):
 
 @app.route('/cards/<id>')
 def cards(id):
-    print "CARDS!"
+    # get get data and shuffle words
     set = Set.query.filter_by(id=id).first()
+    shuffle(set.words)
     return render_template('cards.html', name=set.name, set=set.words)
