@@ -12,10 +12,10 @@ def before_request():
     g.user = current_user
 
 @app.route('/')
-@app.route('/index')
+@app.route('/index/')
 def index():
     sets_to_return = [];
-    sets = Set.query.order_by(Set.id).limit(3).all()
+    sets = Set.query.order_by(Set.id.desc()).limit(3).all()
     return render_template('index.html', title='Home', sets=sets, user=g.user)
 
 @app.route('/addset', methods=['GET', 'POST'])
@@ -54,10 +54,17 @@ def deleteset(id):
 
 @app.route('/words/')
 def getWord():
-    word = request.args.get('word')
-    query_result = Word.query.filter_by(simplified=word).first()
-    return_data = {'traditional': query_result.traditional, 'pinyin': query_result.pinyin, 'english': query_result.english}
-    return jsonify(return_data)
+    if request.args:
+        word = request.args.get('word')
+        query_result = Word.query.filter_by(simplified=word).first()
+        if query_result:
+            return_data = {'traditional': query_result.traditional, 'pinyin': query_result.pinyin, 'english': query_result.english}
+            return jsonify(return_data)
+        else:
+            return jsonify({})
+
+    # do not let users visit /words/ url
+    abort(404)
 
 @app.route('/set/<id>')
 def set(id):
