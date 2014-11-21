@@ -52,8 +52,9 @@ def deleteset(id):
     db.session.commit()
     return jsonify({'id': id})
 
-@app.route('/words/<word>')
-def getWord(word):
+@app.route('/words/')
+def getWord():
+    word = request.args.get('word')
     query_result = Word.query.filter_by(simplified=word).first()
     return_data = {'traditional': query_result.traditional, 'pinyin': query_result.pinyin, 'english': query_result.english}
     return jsonify(return_data)

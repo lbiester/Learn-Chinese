@@ -55,7 +55,9 @@ $(document).ready(function() {
       $('input[name="input-word"]').bind('blur', function() {
           input = $(this);
           if (input.val() !== "") {
-              $.getJSON($SCRIPT_ROOT + '/words/' + input.val(), function(data) {
+              $.getJSON($SCRIPT_ROOT + '/words/',{
+                word: input.val()
+            }, function(data) {
                 input.parent().next().html(data.traditional);
                 input.parent().next().next().html(data.pinyin);
                 input.parent().next().next().next().html(data.english);
