@@ -55,10 +55,19 @@ def deleteset(id):
 @app.route('/words/')
 def getWord():
     if request.args:
-        word = request.args.get('word')
-        query_result = Word.query.filter_by(simplified=word).first()
+        # take data type and data, return specified values
+        word = request.args.get('data')
+        parameter = request.args.get('parameter')
+        returnTypes = request.args.get('returnTypes')
+        query_result = Word.query.filter(getattr(Word, parameter) == word).first()
         if query_result:
-            return_data = {'traditional': query_result.traditional, 'pinyin': query_result.pinyin, 'english': query_result.english}
+            return_data = {}
+            if returnTypes == 'all':
+                return_data = {'traditional': query_result.traditional,
+                    'simplified': query_result.simplified, 'pinyin': query_result.pinyin,
+                    'english': query_result.english, 'id': query_result.id}
+            else:
+                return_data[returnTypes] = getattr(query_result, returnTypes)
             return jsonify(return_data)
         else:
             return jsonify({})

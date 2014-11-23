@@ -56,7 +56,9 @@ $(document).ready(function() {
           input = $(this);
           if (input.val() !== "") {
               $.getJSON($SCRIPT_ROOT + '/words/',{
-                word: input.val()
+                data: input.val(),
+                parameter: 'simplified',
+                returnTypes: 'all'
             }, function(data) {
                 input.parent().next().html(data.traditional);
                 input.parent().next().next().html(data.pinyin);
