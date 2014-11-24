@@ -60,6 +60,7 @@ def getWord():
         parameter = request.args.get('parameter')
         returnTypes = request.args.get('returnTypes')
         query_result = Word.query.filter(getattr(Word, parameter) == word).first()
+        # query_result = Word.query.filter_by(id=word).first()
         if query_result:
             return_data = {}
             if returnTypes == 'all':
@@ -67,7 +68,8 @@ def getWord():
                     'simplified': query_result.simplified, 'pinyin': query_result.pinyin,
                     'english': query_result.english, 'id': query_result.id}
             else:
-                return_data[returnTypes] = getattr(query_result, returnTypes)
+                # works better than specifying type, which we should already know
+                return_data['word'] = getattr(query_result, returnTypes)
             return jsonify(return_data)
         else:
             return jsonify({})

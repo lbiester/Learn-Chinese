@@ -3,7 +3,7 @@ $(document).ready(function() {
     // event listeners
     $('input').keydown(function(event){
         if (event.keyCode == 13) {
-            checkInput($(this));
+            getAnswer($(this));
             event.preventDefault();
             return false;
         }
@@ -11,12 +11,12 @@ $(document).ready(function() {
 
     $('button.submit-answer').click(function() {
         input = $(this).parent().prev().children();
-        checkInput(input);
+        getAnswer(input, false);
     });
 
     $('button.reveal-answer').click(function() {
         input = $(this).parent().prev().children();
-        iffyInput(input);
+        getAnswer(input, true);
     });
 
     $('button#next-card').click(function() {
@@ -38,45 +38,53 @@ $(document).ready(function() {
     });
 
     $('button#revealAll').click(function() {
-        var traditional = $('div.card-row.active div#traditional');
-        var pinyin = $('div.card-row.active div#pinyin');
-        var english = $('div.card-row.active div#english');
+        var traditional = $('div.card-row.active div#traditional .btn:first');
+        var pinyin = $('div.card-row.active div#pinyin .btn:first');
+        var english = $('div.card-row.active div#english .btn:first');
 
         if (!(traditional).hasClass('correct')) {
-            traditional.removeClass('wrong');
-            traditional.addClass('iffy');
-            traditional.children().first().removeClass('invisible');
-            traditional.children().first().next().addClass('invisible');
+            getAnswer(traditional, true);
         }
         if (!(pinyin).hasClass('correct')) {
-            pinyin.removeClass('wrong');
-            pinyin.addClass('iffy');
-            pinyin.children().first().removeClass('invisible');
-            pinyin.children().first().next().addClass('invisible');
-        }
+            getAnswer(pinyin, true);        }
         if (!(english).hasClass('correct')) {
-            english.removeClass('wrong');
-            english.addClass('iffy');
-            english.children().first().removeClass('invisible');
-            english.children().first().next().addClass('invisible');
-        }
+            getAnswer(english, true);        }
     });
 
 
     // jQuery helper functions
-    checkInput = function(element) {
+    getAnswer = function(element, reveal) {
+        console.log("REVEAL " + reveal);
         type = element.parent().parent().parent().attr('id');
-        correctResponse = element.parent().parent().prev().html();
+        wordId = element.parent().parent().parent().parent().attr('id');
+
+        $.getJSON($SCRIPT_ROOT + '/words/',{
+            data: wordId,
+            parameter: 'id',
+            returnTypes: type
+        }, function(data) {
+            if (reveal) {
+                // messy fix currently to deal with asynchronous calls changing type
+                type = element.parent().parent().parent().attr('id');
+                iffyInput(element, type, data.word);
+            } else {
+                checkAnswer(element, type, data.word);
+            }
+        });
+    }
+
+    checkAnswer = function(element, type, correctResponse) {
+        console.log('checking!');
         // perform special check on english words, so that it is possible to get it right
         if (type != 'english') {
             if (element.val() === correctResponse) {
-                correctInput(element);
+                correctInput(element, type, correctResponse);
             } else {
                 incorrectInput(element);
             }
         } else {
             if (englishInputCheck(element.val().trim().toLowerCase(), correctResponse.trim().toLowerCase())) {
-                correctInput(element);
+                correctInput(element, type, correctResponse);
             } else {
                 incorrectInput(element);
             }
@@ -131,18 +139,29 @@ $(document).ready(function() {
         return newString;
     }
 
-    correctInput = function(element) {
+    correctInput = function(element, type, correctResponse) {
         element.parent().parent().parent().removeClass('wrong');
 	    element.parent().parent().parent().addClass('correct');
-        element.parent().parent().addClass('invisible');
-        element.parent().parent().prev().removeClass('invisible');
+        console.log(element.parent().parent());
+        if (type === 'english') {
+            element.parent().parent().html('<div class="col-xs-12"><p>'
+                + correctResponse + '</p></div>');
+        } else {
+            element.parent().parent().html('<div class="col-xs-12"><h1>'
+                + correctResponse + '</h1></div>');
+        }
     }
 
-    iffyInput = function(element) {
+    iffyInput = function(element, type, correctResponse) {
         element.parent().parent().parent().removeClass('wrong');
         element.parent().parent().parent().addClass('iffy');
-        element.parent().parent().addClass('invisible');
-        element.parent().parent().prev().removeClass('invisible');
+        if (type === 'english') {
+            element.parent().parent().html('<div class="col-xs-12"><p>'
+                + correctResponse + '</p></div>');
+        } else {
+            element.parent().parent().html('<div class="col-xs-12"><h1>'
+                + correctResponse + '</h1></div>');
+        }
     }
 
     incorrectInput = function(element) {

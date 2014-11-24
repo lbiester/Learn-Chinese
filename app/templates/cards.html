@@ -11,14 +11,14 @@
 </div>
 {% for word in set %}
 <div class="row invisible card-row" id="{{ loop.index }}">
-    <div class="col-md-12">
+    <div class="col-md-12" id="{{ word.id }}">
         <div class="card center-block" id="simplified">
             Simplified Character
             <h1>{{ word.simplified }}</h1>
         </div>
         <div class="card center-block" id="traditional">
             Traditional Character
-            <h1 class="invisible">{{ word.traditional }}</h1>
+            <!-- <h1 class="invisible">{{ word.traditional }}</h1> -->
             <div class="row word-input">
                 <div class="col-md-6">
                     <input class="form-control traditional" />
@@ -33,7 +33,7 @@
         </div>
         <div class="card center-block" id="pinyin">
             Pinyin
-            <h1 class="invisible">{{ word.pinyin }}</h1>
+            <!-- <h1 class="invisible">{{ word.pinyin }}</h1> -->
             <div class="row word-input">
                 <div class="col-md-6">
                     <input class="form-control traditional" />
@@ -48,7 +48,7 @@
         </div>
         <div class="card center-block" id="english">
             English
-            <p class="invisible">{{ word.english }}</p>
+            <!-- <p class="invisible">{{ word.english }}</p> -->
             <div class="row word-input">
                 <div class="col-md-6">
                     <input class="form-control traditional" />
