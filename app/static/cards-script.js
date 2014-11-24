@@ -55,8 +55,8 @@ $(document).ready(function() {
     // jQuery helper functions
     getAnswer = function(element, reveal) {
         console.log("REVEAL " + reveal);
-        type = element.parent().parent().parent().attr('id');
-        wordId = element.parent().parent().parent().parent().attr('id');
+        var type = element.parent().parent().parent().attr('id');
+        var wordId = element.parent().parent().parent().parent().attr('id');
 
         $.getJSON($SCRIPT_ROOT + '/words/',{
             data: wordId,
@@ -64,8 +64,6 @@ $(document).ready(function() {
             returnTypes: type
         }, function(data) {
             if (reveal) {
-                // messy fix currently to deal with asynchronous calls changing type
-                type = element.parent().parent().parent().attr('id');
                 iffyInput(element, type, data.word);
             } else {
                 checkAnswer(element, type, data.word);
