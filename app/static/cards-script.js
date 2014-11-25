@@ -9,6 +9,29 @@ $(document).ready(function() {
         }
     });
 
+    $('input[name="start"]').click(function() {
+        console.log($(this).attr('id'));
+    });
+
+    $('div.test-on input').click(function() {
+        // reset last card (css) and make nothing currently disabled
+        $('div.card').removeClass('currentLast');
+        $('div.test-on input').removeAttr('disabled');
+
+        var id = $(this).attr('id');
+        if ($(this).is(':checked')) {
+            $('div#' + id).removeClass('invisible');
+        } else {
+            $('div#' + id).addClass('invisible');
+        }
+        $('div.card-row').each(function() {
+            $(this).children().children(':not(.invisible)').last().addClass('currentLast');
+        })
+        if ($('div.card-row.active div div.card:not(.invisible)').length < 3) {
+            $('div.test-on input:checked').attr('disabled', 'disabled');
+        }
+    });
+
     $('button.submit-answer').click(function() {
         input = $(this).parent().prev().children();
         getAnswer(input, false);

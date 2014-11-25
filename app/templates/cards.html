@@ -9,6 +9,32 @@
         <h1>{{ name }}</h1>
     </div>
 </div>
+<div class="row">
+    <div class="col-xs-6 text-center">
+        <h3>Options</h3>
+    </div>
+    <div class="col-xs-6">
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- TODO: Implement this functionality! -->
+                <!-- <h5>Start With</h5>
+                <input type="radio" name="start" id="simplified" checked />Simplified
+                <input type="radio" name="start" id="traditional" />Traditional
+                <input type="radio" name="start" id="pinyin"/>Pinyin
+                <input type="radio" name="start" id="english" />English -->
+            </div>
+        </div>
+        <div class="row test-on">
+            <div class="col-xs-6">
+                <h5>Test On</h5>
+                <input type="checkbox" id="traditional" checked/> Traditional
+                <input type="checkbox" id="pinyin" checked/> Pinyin
+                <input type="checkbox" id="english" checked/> English
+            </div>
+        </div>
+    </div>
+</div>
+
 {% for word in set %}
 <div class="row invisible card-row" id="{{ loop.index }}">
     <div class="col-md-12" id="{{ word.id }}">

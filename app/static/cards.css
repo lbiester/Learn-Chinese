@@ -7,6 +7,9 @@ div.card {
 div.card:last-child {
     border-bottom: 3px solid black;
 }
+div.card.currentLast {
+    border-bottom: 3px solid black;
+}
 .invisible {
     display: none;
 }
