@@ -2,10 +2,11 @@
 
 from app import app, models, db
 from models import *
-from flask import render_template, request, redirect, jsonify, g, abort
+from flask import render_template, request, redirect, jsonify, g, abort, Response
 from flask.ext.login import current_user
 from flask_user import login_required
 from random import shuffle
+import json
 
 @app.before_request
 def before_request():
@@ -75,6 +76,19 @@ def getWord():
             return jsonify({})
 
     # do not let users visit /words/ url
+    abort(404)
+
+@app.route('/wordsMultiple/')
+def getWords():
+    if request.args:
+        word = request.args.get('data')
+        parameter = request.args.get('parameter')
+        results = Word.query.filter(getattr(Word, parameter) == word).all()
+        return_data = []
+        for result in results:
+            return_data.append({'id': result.id, 'traditional': result.traditional,
+            'simplified': result.simplified, 'pinyin': result.pinyin, 'english': result.english})
+        return Response(json.dumps(return_data),  mimetype='application/json')
     abort(404)
 
 @app.route('/set/<id>')
