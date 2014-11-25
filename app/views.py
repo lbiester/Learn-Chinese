@@ -2,7 +2,7 @@
 
 from app import app, models, db
 from models import *
-from flask import render_template, request, redirect, jsonify, g
+from flask import render_template, request, redirect, jsonify, g, abort
 from flask.ext.login import current_user
 from flask_user import login_required
 from random import shuffle
