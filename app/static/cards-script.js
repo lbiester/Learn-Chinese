@@ -95,10 +95,9 @@ $(document).ready(function() {
     }
 
     checkAnswer = function(element, type, correctResponse) {
-        console.log('checking!');
         // perform special check on english words, so that it is possible to get it right
         if (type != 'english') {
-            if (element.val() === correctResponse) {
+            if (element.val().toLowerCase() === correctResponse.toLowerCase()) {
                 correctInput(element, type, correctResponse);
             } else {
                 incorrectInput(element);
