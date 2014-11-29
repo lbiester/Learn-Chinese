@@ -3,3 +3,9 @@ div.rounded-box {
     border-radius: 10px;
     margin: 10px 0px;
 }
+button.btn-100 {
+    width: 100%;
+}
+div.rounded-box div.row:last-of-type {
+    padding-bottom: 10px;
+}
