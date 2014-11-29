@@ -2,10 +2,13 @@ div.rounded-box {
     border: 1px solid black;
     border-radius: 10px;
     margin: 10px 0px;
+    padding: 10px 0px;
 }
-button.btn-100 {
+
+button.btn-100, a.btn-100 {
     width: 100%;
 }
-div.rounded-box div.row:last-of-type {
-    padding-bottom: 10px;
+
+button.remove-row {
+    height: 34px;
 }

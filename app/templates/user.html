@@ -10,6 +10,7 @@ $(document).ready(function() {
                 url: $SCRIPT_ROOT + '/deleteset/' + this.id,
                 success: function(data){
                     console.log("success");
+                    console.log(data.id);
                     $('button#' + data.id).parent().parent().parent().parent().remove();
                 }
         });
@@ -30,8 +31,13 @@ $(document).ready(function() {
         <div class="row rounded-box">
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-10">
                         <a href="{{ url_for('set', id=set.id) }}"><h4>{{ set.name or "Untitled"}}</h4></a>
+                    </div>
+                    <div class="col-xs-2">
+                        <a href="{{ url_for('cards', id=set.id) }}" class="btn btn-success btn-100" type="button">
+                            Study Cards
+                        </a>
                     </div>
                 </div>
                 <div class="row">
@@ -54,7 +60,9 @@ $(document).ready(function() {
 
                     </div>
                     <div class="col-xs-2">
-                        <button class="btn btn-danger btn-100 remove-row" type="button" id="{{ set.id }}"><i class="fa fa-times"></i></button>
+                        <button class="btn btn-danger btn-100 remove-row" type="button" id="{{ set.id }}">
+                            <i class="fa fa-times"></i>
+                        </button>
                     </div>
                 </div>
             </div>
