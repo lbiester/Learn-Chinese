@@ -2,7 +2,7 @@
 
 from app import app, models, db
 from models import *
-from flask import render_template, request, redirect, jsonify, g, abort, Response
+from flask import render_template, request, redirect, jsonify, g, abort, Response, url_for
 from flask.ext.login import current_user
 from flask_user import login_required
 from random import shuffle
@@ -19,23 +19,23 @@ def index():
     sets = Set.query.order_by(Set.id.desc()).limit(3).all()
     return render_template('index.html', title='Home', sets=sets, user=g.user)
 
-@app.route('/addset', methods=['GET', 'POST'])
+@app.route('/addset/', methods=['GET', 'POST'])
 def addset():
     if request.method == 'POST':
         if g.user.is_authenticated():
             user_id = g.user.id
         else:
             user_id = None
-        list = request.form.getlist('input-word')
-        set = models.Set(request.form['set-name'], user_id)
+        list = request.json.get('data')
+        set = models.Set(request.json.get('title'), current_user.id)
         for input in list:
-            if input != "":
-                word = models.Word.query.filter_by(simplified=input).first()
+            if input != None:
+                word = models.Word.query.filter_by(id=input).first()
                 if word:
                     set.words.append(word)
         db.session.add(set)
         db.session.commit()
-        return redirect('/user/')
+        return json.dumps({'success':True, 'url': url_for('user')}), 200, {'ContentType':'application/json'}
     return render_template('addset.html')
 
 @app.route('/user/')
@@ -73,7 +73,7 @@ def getWord():
                 return_data['word'] = getattr(query_result, returnTypes)
             return jsonify(return_data)
         else:
-            return jsonify({})
+            return jsonify({'error': 'No result'})
 
     # do not let users visit /words/ url
     abort(404)
