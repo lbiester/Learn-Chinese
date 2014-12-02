@@ -24,7 +24,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <form class="navbar-form navbar-left pull-right" role="search">
                 {% if current_user.is_authenticated() %}
-                  Welcome, {{  current_user.username }}
+                  Welcome, {{  current_user.username }}&nbsp;&nbsp;
                  <a href="{{ url_for('user.logout') }}" class="btn btn-warning">Sign out</a>
                 {% else %}
                   <a href="{{ url_for('user.login') }}" class="btn btn-success" role="button">Log In</a>
