@@ -41,8 +41,9 @@ $(document).ready(function() {
         // client-side error handling
         $('div.alert').remove();
         var allEmpty = true;
-        $('input[name="input-word"]').each(function() {
-            if ($(this).val().trim() !== "") {
+
+        chosen_words.forEach(function(word) {
+            if (word !== null) {
                 allEmpty = false;
                 return;
             }
