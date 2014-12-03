@@ -2,28 +2,24 @@
 
 from app import app, models, db
 from models import *
-from flask import render_template, request, redirect, jsonify, g, abort, Response, url_for
+from flask import render_template, request, redirect, jsonify, abort, Response, url_for
 from flask.ext.login import current_user
 from flask_user import login_required
 from random import shuffle
 import json
-
-@app.before_request
-def before_request():
-    g.user = current_user
 
 @app.route('/')
 @app.route('/index/')
 def index():
     sets_to_return = [];
     sets = Set.query.order_by(Set.id.desc()).limit(3).all()
-    return render_template('index.html', title='Home', sets=sets, user=g.user)
+    return render_template('index.html', title='Home', sets=sets)
 
 @app.route('/addset/', methods=['GET', 'POST'])
 def addset():
     if request.method == 'POST':
-        if g.user.is_authenticated():
-            user_id = g.user.id
+        if current_user.is_authenticated():
+            user_id = current_user.id
         else:
             user_id = None
         list = request.json.get('data')
@@ -44,8 +40,7 @@ def user():
     if request.method == 'DELETE':
         return jsonify({})
     else:
-        user = g.user
-        return render_template('user.html', user=user)
+        return render_template('user.html', user=current_user)
 
 @app.route('/deleteset/<id>', methods=['POST'])
 def deleteset(id):
