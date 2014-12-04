@@ -50,21 +50,25 @@ $(document).ready(function() {
         });
         if (allEmpty) {
             event.preventDefault();
-            $('div.row:first').before(error_message + 'You cannot leave all fields blank</div>');
+            show_error('You cannot leave all fields blank');
             return;
         }
         if (title.trim() === "") {
             event.preventDefault();
-            $('div.row:first').before(error_message + 'You must include a title</div>');
+            show_error('You must include a title');
             return;
         }
+
         $.ajax({
           type: "POST",
           contentType: "application/json; charset=utf-8",
           url: $SCRIPT_ROOT + '/addset/',
           data: JSON.stringify({title: title, data: chosen_words}),
-          success: function (data) {
+          success: function(data) {
               window.location.replace(data.url);
+          },
+          error: function(data) {
+            show_error(data.responseJSON.error);
           },
           dataType: "json"
           });
@@ -95,7 +99,11 @@ $(document).ready(function() {
           }
           return false;
         });
-    };
+    }
+    
+    show_error = function(message) {
+        $('div.row:first').before(error_message + message + '</div>');
+    }    
 
     define_table = function(input, traditional, pinyin, english) {
         input.parent().next().html(traditional);

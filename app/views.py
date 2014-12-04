@@ -23,15 +23,20 @@ def addset():
         else:
             user_id = None
         list = request.json.get('data')
-        set = models.Set(request.json.get('title'), current_user.id)
+        title = request.json.get('title')
+        if title == "":
+            return json.dumps({'success': False, 'error': 'You must include a title'}), 400, {'ContentType': 'application/json'}
+        set = models.Set(title, user_id)
         for input in list:
             if input != None:
                 word = models.Word.query.filter_by(id=input).first()
                 if word:
                     set.words.append(word)
+        if len(set.words) == 0:
+            return json.dumps({'success': False, 'error': 'You cannot leave all fields blank'}), 400, {'ContentType': 'application/json'}
         db.session.add(set)
         db.session.commit()
-        return json.dumps({'success':True, 'url': url_for('user')}), 200, {'ContentType':'application/json'}
+        return json.dumps({'success': True, 'url': url_for('user')}), 200, {'ContentType': 'application/json'}
     return render_template('addset.html')
 
 @app.route('/user/')
