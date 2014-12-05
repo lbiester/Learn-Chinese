@@ -5,6 +5,7 @@ button.btn-100 {
 button.add-rows {
     margin-bottom: 10px;
 }
+
 input.set-name {
     margin-bottom: 10px;
 }
@@ -12,12 +13,24 @@ input.set-name {
 button.invisible {
     display: none;
 }
-colgroup col:nth-child(1),
-colgroup col:nth-child(2),
-colgroup col:nth-child(3),
-colgroup col:nth-child(5) {
+
+#input-table colgroup col:nth-child(1),
+#input-table colgroup col:nth-child(2),
+#input-table colgroup col:nth-child(3),
+#input-table colgroup col:nth-child(5) {
     width: 15%;
 }
-colgroup col:nth-child(4) {
+
+#input-table colgroup col:nth-child(4) {
     width: 40%;
+}
+
+#selection-table colgroup col:nth-child(1),
+#selection-table colgroup col:nth-child(2),
+#selection-table colgroup col:nth-child(4) {
+    width: 15%;
+}
+
+#selection-table colgroup col:nth-child(3) {
+    width: 55%;
 }

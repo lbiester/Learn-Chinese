@@ -8,7 +8,8 @@ var error_message = '<div class="alert alert-danger" role="alert"> \
   <i class="fa fa-exclamation-circle"></i> \
   <span class="sr-only">Error:</span>';
 var chosen_words = [null, null, null, null, null];
-
+var input_row = null;
+var valueSelected = false;
 
 $(document).ready(function() {
 
@@ -86,6 +87,12 @@ $(document).ready(function() {
           });
     });
 
+    $('#wordModal').on('hidden.bs.modal', function() {
+        if (valueSelected) {
+            valueSelected = false;
+        }
+    });
+
 
 
     // jQuery helper functions
@@ -93,7 +100,7 @@ $(document).ready(function() {
       $('input[name="input-word"]').bind('blur', function() {
           input = $(this);
           if (input.val() !== "") {
-              $.getJSON($SCRIPT_ROOT + '/words/',{
+              $.getJSON($SCRIPT_ROOT + '/wordsMultiple/',{
                 data: input.val(),
                 parameter: 'simplified',
                 returnTypes: 'all'
@@ -101,8 +108,15 @@ $(document).ready(function() {
                 if (data.error) {
                     process_input(input, '', '', '', null);
                 } else {
-                    process_input(input, data.traditional, data.pinyin,
-                        data.english, data.id);
+                    if (data.length === 1) {
+                        data = data[0];
+                        process_input(input, data.traditional, data.pinyin,
+                            data.english, data.id);
+                    } else {
+                        input_row = input;
+                        create_options(data);
+                        $('#wordModal').modal('show');
+                    }
                 }
               });
           } else {
@@ -111,6 +125,33 @@ $(document).ready(function() {
           return false;
         });
     };
+
+
+    var create_options = function(wordList) {
+        $('table#selection-table tr').remove();
+        $('span#wordModalTitleCharacter').html(wordList[0].simplified);
+        wordList.forEach(function(word) {
+            $('table#selection-table tbody').append(create_table_row(word));
+        });
+        $('button.btn-word-id').click(function() {
+            valueSelected = true;
+            $('#wordModal').modal('hide');
+            // simplified = $('span#wordModalTitleCharacter').html();
+            traditional = $(this).parent().prev().prev().prev().html();
+            pinyin = $(this).parent().prev().prev().html();
+            english = $(this).parent().prev().html();
+            id = Number($(this).attr('id'));
+            process_input(input_row, traditional, pinyin, english, id);
+        });
+    };
+
+
+    var create_table_row = function(word) {
+        return '<tr><td>' + word.traditional + '</td><td>' + word.pinyin + '</td><td>' +
+            word.english + '</td><td><button class="btn btn-success btn-100 btn-word-id"' +
+            'type="button" id="' + word.id + '"><i class="fa fa-check"></i></button></td></tr>';
+    };
+
 
     var process_input = function(input, traditional, pinyin, english, id) {
         define_table(input, traditional, pinyin, english);
