@@ -99,22 +99,23 @@ $(document).ready(function() {
                 returnTypes: 'all'
             }, function(data) {
                 if (data.error) {
-                    define_table(input, '', '', '');
-                    index = $('table#input-table tbody tr').index(input.parent().parent());
-                    chosen_words[index] = null;
+                    process_input(input, '', '', '', null);
                 } else {
-                    define_table(input, data.traditional, data.pinyin, data.english);
-                    index = $('table#input-table tbody tr').index(input.parent().parent());
-                    chosen_words[index] = data.id;
+                    process_input(input, data.traditional, data.pinyin,
+                        data.english, data.id);
                 }
               });
           } else {
-              define_table(input, '', '', '');
-              index = $('table#input-table tbody tr').index(input.parent().parent());
-              chosen_words[index] = null;
+              process_input(input, '', '', '', null);
           }
           return false;
         });
+    };
+
+    var process_input = function(input, traditional, pinyin, english, id) {
+        define_table(input, traditional, pinyin, english);
+        index = $('table#input-table tbody tr').index(input.parent().parent());
+        chosen_words[index] = id;
     };
 
 
