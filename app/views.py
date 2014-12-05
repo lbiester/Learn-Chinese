@@ -1,8 +1,8 @@
 # This Python file uses the following encoding: utf-8
 
-from app import app, models, db
-from models import *
-from flask import render_template, request, redirect, jsonify, abort, Response, url_for
+from app import app, db
+from models import Set, Word
+from flask import render_template, request, jsonify, abort, Response, url_for
 from flask.ext.login import current_user
 from flask_user import login_required
 from random import shuffle
@@ -11,7 +11,6 @@ import json
 @app.route('/')
 @app.route('/index/')
 def index():
-    sets_to_return = [];
     sets = Set.query.order_by(Set.id.desc()).limit(3).all()
     return render_template('index.html', title='Home', sets=sets)
 
@@ -26,10 +25,10 @@ def addset():
         title = request.json.get('title')
         if title == "":
             return json.dumps({'success': False, 'error': 'You must include a title'}), 400, {'ContentType': 'application/json'}
-        set = models.Set(title, user_id)
+        set = Set(title, user_id)
         for input in list:
             if input != None:
-                word = models.Word.query.filter_by(id=input).first()
+                word = Word.query.filter_by(id=input).first()
                 if word:
                     set.words.append(word)
         if len(set.words) == 0:
@@ -61,13 +60,12 @@ def getWord():
         parameter = request.args.get('parameter')
         returnTypes = request.args.get('returnTypes')
         query_result = Word.query.filter(getattr(Word, parameter) == word).first()
-        # query_result = Word.query.filter_by(id=word).first()
         if query_result:
             return_data = {}
             if returnTypes == 'all':
                 return_data = {'traditional': query_result.traditional,
-                    'simplified': query_result.simplified, 'pinyin': query_result.pinyin,
-                    'english': query_result.english, 'id': query_result.id}
+                'simplified': query_result.simplified, 'pinyin': query_result.pinyin,
+                'english': query_result.english, 'id': query_result.id}
             else:
                 # works better than specifying type, which we should already know
                 return_data['word'] = getattr(query_result, returnTypes)
@@ -80,15 +78,21 @@ def getWord():
 
 @app.route('/wordsMultiple/')
 def getWords():
+    '''
+        Get a list of words matching a character/english def/pinyin
+    '''
     if request.args:
         word = request.args.get('data')
         parameter = request.args.get('parameter')
         results = Word.query.filter(getattr(Word, parameter) == word).all()
         return_data = []
-        for result in results:
-            return_data.append({'id': result.id, 'traditional': result.traditional,
-            'simplified': result.simplified, 'pinyin': result.pinyin, 'english': result.english})
-        return Response(json.dumps(return_data),  mimetype='application/json')
+        if results:
+            for result in results:
+                return_data.append({'id': result.id, 'traditional': result.traditional,
+                'simplified': result.simplified, 'pinyin': result.pinyin, 'english': result.english})
+            return Response(json.dumps(return_data), mimetype='application/json')
+        else:
+            return jsonify({'error': 'No result'})
     abort(404)
 
 @app.route('/set/<id>')
