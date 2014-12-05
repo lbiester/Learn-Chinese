@@ -2,16 +2,18 @@ $(document).ready(function() {
 
     // event listeners
     $('input').keydown(function(event){
-        if (event.keyCode == 13) {
+        if (event.keyCode === 13) {
             getAnswer($(this));
             event.preventDefault();
             return false;
         }
     });
 
+
     $('input[name="start"]').click(function() {
         console.log($(this).attr('id'));
     });
+
 
     $('div.test-on input').click(function() {
         // reset last card (css) and make nothing currently disabled
@@ -26,21 +28,24 @@ $(document).ready(function() {
         }
         $('div.card-row').each(function() {
             $(this).children().children(':not(.invisible)').last().addClass('currentLast');
-        })
+        });
         if ($('div.card-row.active div div.card:not(.invisible)').length < 3) {
             $('div.test-on input:checked').attr('disabled', 'disabled');
         }
     });
+
 
     $('button.submit-answer').click(function() {
         input = $(this).parent().prev().children();
         getAnswer(input, false);
     });
 
+
     $('button.reveal-answer').click(function() {
         input = $(this).parent().prev().children();
         getAnswer(input, true);
     });
+
 
     $('button#next-card').click(function() {
         var next = $('div.card-row.active').next();
@@ -51,6 +56,7 @@ $(document).ready(function() {
         activateButtons();
     });
 
+
     $('button#prev-card').click(function() {
         var prev = $('div.card-row.active').prev();
         $('div.card-row.active').addClass('invisible');
@@ -59,6 +65,7 @@ $(document).ready(function() {
         prev.addClass('active');
         activateButtons();
     });
+
 
     $('button#revealAll').click(function() {
         var traditional = $('div.card-row.active div#traditional .btn:first');
@@ -75,8 +82,9 @@ $(document).ready(function() {
     });
 
 
+
     // jQuery helper functions
-    getAnswer = function(element, reveal) {
+    var getAnswer = function(element, reveal) {
         console.log("REVEAL " + reveal);
         var type = element.parent().parent().parent().attr('id');
         var wordId = element.parent().parent().parent().parent().attr('id');
@@ -92,9 +100,10 @@ $(document).ready(function() {
                 checkAnswer(element, type, data.word);
             }
         });
-    }
+    };
 
-    checkAnswer = function(element, type, correctResponse) {
+
+    var checkAnswer = function(element, type, correctResponse) {
         // perform special check on english words, so that it is possible to get it right
         if (type != 'english') {
             if (element.val().toLowerCase() === correctResponse.toLowerCase()) {
@@ -109,9 +118,10 @@ $(document).ready(function() {
                 incorrectInput(element);
             }
         }
-    }
+    };
 
-    englishInputCheck = function(input, correctAnswer) {
+
+    var englishInputCheck = function(input, correctAnswer) {
         // normalize input, split into array
         correctAnswer = removeNonAlphaNum(correctAnswer).split(" ");
         input = removeNonAlphaNum(input).split(" ");
@@ -130,65 +140,71 @@ $(document).ready(function() {
 
         // check if all words in input are in definition
         for (var i = 0; i < input.length; i++) {
-            if (correctAnswer.indexOf(input[i]) == -1) {
+            if (correctAnswer.indexOf(input[i]) === -1) {
                 return false;
             }
         }
         return true;
-    }
+    };
 
-    removeNonAlphaNum = function(string) {
+
+    var removeNonAlphaNum = function(string) {
         newString = "";
+        var chr;
 
         // keep characters necessary for words
         for (var i = 0; i < string.length; i++) {
             chr = string.charCodeAt(i);
-            if ((97 <= chr && chr <= 122) || (48 <= chr && chr <= 57)
-                || chr === 45 || chr === 39 ) {
+            if ((97 <= chr && chr <= 122) || (48 <= chr && chr <= 57) ||
+                chr === 45 || chr === 39 ) {
                 newString += string[i];
             } else if (chr === 32) {
                 // does not allow two spaces in a row
                 if (string.charCodeAt(i - 1) != 32) {
                     newString += string[i];
                 }
-            } else if (chr == 47) {
+            } else if (chr === 47) {
                 // replace "/" with " "
                 newString += " ";
             }
         }
         return newString;
-    }
+    };
 
-    correctInput = function(element, type, correctResponse) {
+
+    var correctInput = function(element, type, correctResponse) {
         element.parent().parent().parent().removeClass('wrong');
 	    element.parent().parent().parent().addClass('correct');
         console.log(element.parent().parent());
         if (type === 'english') {
-            element.parent().parent().html('<div class="col-xs-12"><p>'
-                + correctResponse + '</p></div>');
+            element.parent().parent().html('<div class="col-xs-12"><p>' +
+                correctResponse + '</p></div>');
         } else {
-            element.parent().parent().html('<div class="col-xs-12"><h1>'
-                + correctResponse + '</h1></div>');
+            element.parent().parent().html('<div class="col-xs-12"><h1>' +
+                correctResponse + '</h1></div>');
         }
-    }
+    };
 
-    iffyInput = function(element, type, correctResponse) {
+
+    var iffyInput = function(element, type, correctResponse) {
         element.parent().parent().parent().removeClass('wrong');
         element.parent().parent().parent().addClass('iffy');
         if (type === 'english') {
-            element.parent().parent().html('<div class="col-xs-12"><p>'
-                + correctResponse + '</p></div>');
+            element.parent().parent().html('<div class="col-xs-12"><p>' +
+                correctResponse + '</p></div>');
         } else {
-            element.parent().parent().html('<div class="col-xs-12"><h1>'
-                + correctResponse + '</h1></div>');
+            element.parent().parent().html('<div class="col-xs-12"><h1>' +
+                correctResponse + '</h1></div>');
         }
-    }
+    };
 
-    incorrectInput = function(element) {
+
+    var incorrectInput = function(element) {
         element.parent().parent().parent().addClass('wrong');
-    }
+    };
 
-    activateButtons = function() {
+
+    var activateButtons = function() {
         if ($('div.card-row.active').attr('id') == 1) {
             $('button#prev-card').attr('disabled', 'disabled');
         } else {
@@ -199,11 +215,12 @@ $(document).ready(function() {
         } else {
             $('button#next-card').removeAttr('disabled');
         }
-    }
+    };
+
 
 
     // function calls on page load
     $('div.card-row#1').removeClass('invisible');
     $('div.card-row#1').addClass('active');
     activateButtons();
-})
+});

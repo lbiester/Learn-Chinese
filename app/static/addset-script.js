@@ -1,21 +1,30 @@
+/*jshint multistr: true */
+
+// initial variables
 var table_row = '<tr><td><input name="input-word" class="form-control" \
     /></td><td></td><td></td><td></td><td><button class="btn btn-danger btn-100 remove-row" \
     type="button"><i class="fa fa-times"></i></button></td></tr>';
 var error_message = '<div class="alert alert-danger" role="alert"> \
   <i class="fa fa-exclamation-circle"></i> \
   <span class="sr-only">Error:</span>';
-chosen_words = [null, null, null, null, null];
+var chosen_words = [null, null, null, null, null];
+
+
 $(document).ready(function() {
-    $(window).keydown(function(event){
+
+    //event listneners
+    $(window).keydown(function(event) {
         if (event.keyCode === 13) {
             event.preventDefault();
             return false;
         }
-        else if (event.keyCode === 9) {
+        if (event.keyCode === 9) {
             event.preventDevault();
             return false;
         }
     });
+
+
     $('button.add-rows').click(function() {
         if ($('input[name="input-word"]').length === 1) {
             $('button.remove-row').removeClass('invisible');
@@ -24,20 +33,22 @@ $(document).ready(function() {
         for (var i = 0; i < 5; i++) {
             $('table#input-table tr:last').after(table_row);
             chosen_words.push(null);
-            $('button.remove-row').click(function() {
-                $(this).parent().parent().remove();
-            });
             ajax_input();
         }
         $('button.remove-row').click(function() {
             remove_rows(this);
         });
     });
+
+
     $('button.remove-row').click(function() {
         remove_rows(this);
     });
+
+
     $('button.submit').click(function() {
         var title = $('input.set-name').val();
+
         // client-side error handling
         $('div.alert').remove();
         var allEmpty = true;
@@ -59,6 +70,7 @@ $(document).ready(function() {
             return;
         }
 
+        // perform POST of form data
         $.ajax({
           type: "POST",
           contentType: "application/json; charset=utf-8",
@@ -73,7 +85,11 @@ $(document).ready(function() {
           dataType: "json"
           });
     });
-    ajax_input = function() {
+
+
+
+    // jQuery helper functions
+    var ajax_input = function() {
       $('input[name="input-word"]').bind('blur', function() {
           input = $(this);
           if (input.val() !== "") {
@@ -99,19 +115,22 @@ $(document).ready(function() {
           }
           return false;
         });
-    }
-    
-    show_error = function(message) {
-        $('div.row:first').before(error_message + message + '</div>');
-    }    
+    };
 
-    define_table = function(input, traditional, pinyin, english) {
+
+    var show_error = function(message) {
+        $('div.row:first').before(error_message + message + '</div>');
+    };
+
+
+    var define_table = function(input, traditional, pinyin, english) {
         input.parent().next().html(traditional);
         input.parent().next().next().html(pinyin);
         input.parent().next().next().next().html(english);
-    }
+    };
 
-    remove_rows = function(row) {
+
+    var remove_rows = function(row) {
         index = $('table#input-table tbody tr').index($(row).parent().parent());
         chosen_words.splice(index, 1);
         $(row).parent().parent().remove();
@@ -119,7 +138,11 @@ $(document).ready(function() {
             $('button.remove-row').addClass('invisible');
             $('thead tr th:last').html("");
         }
-    }
+    };
+
+
+
+    // function calls on page load
     ajax_input();
     $('li#addset').addClass('active');
-})
+});
