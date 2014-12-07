@@ -106,8 +106,10 @@ $(document).ready(function() {
                 returnTypes: 'all'
             }, function(data) {
                 if (data.error) {
+                    input.parent().addClass('has-error');
                     process_input(input, '', '', '', null);
                 } else {
+                    input.parent().removeClass('has-error');
                     if (data.length === 1) {
                         data = data[0];
                         process_input(input, data.traditional, data.pinyin,
@@ -120,6 +122,7 @@ $(document).ready(function() {
                 }
               });
           } else {
+              input.parent().removeClass('has-error');
               process_input(input, '', '', '', null);
           }
           return false;
