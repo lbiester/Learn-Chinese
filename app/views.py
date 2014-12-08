@@ -36,7 +36,7 @@ def addset():
         db.session.add(set)
         db.session.commit()
         return json.dumps({'success': True, 'url': url_for('user')}), 200, {'ContentType': 'application/json'}
-    return render_template('addset.html')
+    return render_template('addset.html', title="Add Set")
 
 @app.route('/user/')
 @login_required
@@ -44,7 +44,8 @@ def user():
     if request.method == 'DELETE':
         return jsonify({})
     else:
-        return render_template('user.html', user=current_user)
+        title = current_user.username + "'s Sets"
+        return render_template('user.html', user=current_user, title=title)
 
 @app.route('/deleteset/<id>', methods=['POST'])
 def deleteset(id):
@@ -98,11 +99,12 @@ def getWords():
 @app.route('/set/<id>')
 def set(id):
     set = Set.query.filter_by(id=id).first()
-    return render_template('set.html', name=set.name, set=set.words, id=set.id)
+    return render_template('set.html', name=set.name, set=set.words, id=set.id, title=set.name)
 
 @app.route('/cards/<id>')
 def cards(id):
     # get get data and shuffle words
     set = Set.query.filter_by(id=id).first()
     shuffle(set.words)
-    return render_template('cards.html', name=set.name, set=set.words)
+    title = set.name + " Cards"
+    return render_template('cards.html', name=set.name, set=set.words, title=title)

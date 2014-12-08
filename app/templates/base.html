@@ -5,7 +5,11 @@
         <script>
             var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
         </script>
-        <title>Learn Chinese Flashcards</title>
+        {% if title %}
+        <title>{{ title }} --  Learn Chinese</title>
+        {% else %}
+        <title>Learn Chinese</title>
+        {% endif %}
     </head>
     <body>
         <nav class="navbar navbar-default" role="navigation">
