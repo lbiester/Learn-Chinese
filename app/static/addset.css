@@ -25,6 +25,10 @@ button.invisible {
     width: 40%;
 }
 
+#selection-table {
+    table-layout: fixed;
+}
+
 #selection-table colgroup col:nth-child(1),
 #selection-table colgroup col:nth-child(2),
 #selection-table colgroup col:nth-child(4) {
@@ -33,4 +37,10 @@ button.invisible {
 
 #selection-table colgroup col:nth-child(3) {
     width: 55%;
+}
+
+/* fixes overflow issues for english words with no spaces. could possibly be useful for other sections */
+table tr td {
+    text-overflow: ellipsis;
+    word-wrap: break-word;
 }
