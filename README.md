@@ -9,6 +9,7 @@ Learn-Chinese
 ##Setup
 1. Clone this repo
 2. [Install Pip](https://pip.pypa.io/en/latest/installing.html)
-3. Use pip to install flask, flask-login and virtualenv
-4. Either set up your own config.py or email me and ask for my setup
+3. `sudo pip install virtualenv && . venv/bin/activate`
+4. `pip install flask && pip install flask-login`
+4. Either set up your own config.py or email me at <mailto:biesterl@carleton.edu> and ask for my setup
 5. You should be ready to go. Because we use SQLite, you do not need to run a database server.
